@@ -1,0 +1,24 @@
+{
+  "name": "novaforge",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Build Powerful CLIs. Ship Better Tools.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/devnovaa-id/novaforge.git" },
+  "workspaces": ["packages/*", "examples/*"],
+  "scripts": {
+    "build": "npm run build --workspace=@devnovaa-id/novaforge-core && npm run build --workspace=@devnovaa-id/novaforge-testing && npm run build --workspace=@devnovaa-id/novaforge-prompt && npm run build --workspace=@devnovaa-id/novaforge-terminal-ui",
+    "test": "node --test --import tsx tests/**/*.test.ts",
+    "typecheck": "npm run typecheck:core && npm run typecheck:testing && npm run typecheck:prompt && npm run typecheck:terminal-ui",
+    "typecheck:core": "tsc -p packages/core/tsconfig.json --noEmit --pretty false",
+    "typecheck:testing": "tsc -p packages/testing/tsconfig.json --noEmit --pretty false",
+    "typecheck:prompt": "tsc -p packages/prompt/tsconfig.json --noEmit --pretty false",
+    "typecheck:terminal-ui": "tsc -p packages/terminal-ui/tsconfig.json --noEmit --pretty false",
+    "pack:check": "npm run build && npm pack --dry-run --workspace=@devnovaa-id/novaforge-core && npm pack --dry-run --workspace=@devnovaa-id/novaforge-testing && npm pack --dry-run --workspace=@devnovaa-id/novaforge-prompt && npm pack --dry-run --workspace=@devnovaa-id/novaforge-terminal-ui"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
