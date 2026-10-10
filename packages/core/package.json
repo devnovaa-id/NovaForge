@@ -1,6 +1,6 @@
 {
   "name": "@devnovaa-id/novaforge-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The small, dependency-free command engine for NovaForge CLIs.",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/devnovaa-id/novaforge.git", "directory": "packages/core" },

@@ -67,6 +67,19 @@ test("runs a command with positional arguments and boolean options", async () =>
   assert.deepEqual(output, ["HELLO, KEY!"]);
 });
 
+test("validates typed, choice, and custom options", async () => {
+  const { cli, output, errors } = makeCLI();
+  cli.command("check")
+    .option("--count <number>", "Count", { type: "number" })
+    .option("--mode <mode>", "Mode", { choices: ["fast", "safe"] })
+    .option("--port <port>", "Port", { type: "number", validate: (value) => Number(value) >= 1 && Number(value) <= 65535 || "Port is out of range" })
+    .action(({ options, ui }) => ui.log(`${typeof options.count}:${options.count}:${options.mode}`));
+  assert.equal(await cli.run(["check", "--count", "3", "--mode", "fast", "--port", "8080"]), 0);
+  assert.deepEqual(output, ["number:3:fast"]);
+  assert.equal(await cli.run(["check", "--mode", "slow"]), 1);
+  assert.match(errors.at(-1) ?? "", /Invalid value/);
+});
+
 test("supports nested commands and value options", async () => {
   const { cli, output } = makeCLI();
   cli.command("project create <name>")

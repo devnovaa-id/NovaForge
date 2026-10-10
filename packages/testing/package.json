@@ -1,6 +1,6 @@
 {
   "name": "@devnovaa-id/novaforge-testing",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Testing utilities for NovaForge CLIs.",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/devnovaa-id/novaforge.git", "directory": "packages/testing" },
@@ -13,6 +13,6 @@
   "files": ["dist", "README.md", "LICENSE"],
   "sideEffects": false,
   "scripts": { "build": "tsc -p tsconfig.json" },
-  "dependencies": { "@devnovaa-id/novaforge-core": "0.1.0" },
+  "dependencies": { "@devnovaa-id/novaforge-core": "0.2.0" },
   "license": "MIT"
 }

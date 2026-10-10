@@ -30,6 +30,14 @@ export interface CommandContext {
 
 export type Action = (context: CommandContext) => void | Promise<void>;
 export type OptionParser = (value: string) => OptionValue;
+export type OptionType = "string" | "number" | "boolean";
+export interface OptionConfig {
+  default?: OptionValue;
+  parser?: OptionParser;
+  type?: OptionType;
+  choices?: string[];
+  validate?: (value: OptionValue) => boolean | string;
+}
 export type BeforeCommandHook = (context: CommandContext) => void | Promise<void>;
 export type AfterCommandHook = (context: CommandContext) => void | Promise<void>;
 export type ErrorHook = (error: unknown, context?: CommandContext) => void | Promise<void>;
@@ -81,6 +89,9 @@ interface OptionDefinition {
   takesValue: boolean;
   defaultValue?: OptionValue;
   parser?: OptionParser;
+  type?: OptionType;
+  choices?: string[];
+  validate?: (value: OptionValue) => boolean | string;
 }
 
 interface ArgumentDefinition { name: string; required: boolean; variadic: boolean }
@@ -137,7 +148,7 @@ export class Command {
   description(value: string) { this.descriptionText = value; return this; }
   alias(...values: string[]) { this.aliases.push(...values); return this; }
 
-  option(flags: string, description = "", config: { default?: OptionValue; parser?: OptionParser } = {}) {
+  option(flags: string, description = "", config: OptionConfig = {}) {
     const names = flags.split(/[, ]+/).filter(Boolean);
     const long = names.find((n) => n.startsWith("--"));
     const short = names.find((n) => /^-[^-]/.test(n));
@@ -145,7 +156,7 @@ export class Command {
     const raw = long ?? short!;
     const takesValue = /(?:\s+|=)[<[A-Za-z]/.test(flags);
     const clean = raw.replace(/^--?/, "").replace(/[ <].*$/, "");
-    this.options.push({ name: clean, short: short?.replace(/^-/, ""), description, takesValue, defaultValue: config.default, parser: config.parser });
+    this.options.push({ name: clean, short: short?.replace(/^-/, ""), description, takesValue, defaultValue: config.default, parser: config.parser, type: config.type, choices: config.choices, validate: config.validate });
     return this;
   }
 
@@ -314,12 +325,13 @@ function parseInput(tokens: string[], command: Command, configValues: Record<str
       if (definition.takesValue) {
         const value = inline ?? tokens[++i];
         if (value === undefined) throw new Error(`Option --${raw} requires a value`);
-        options[definition.name] = definition.parser ? definition.parser(value) : value;
+        options[definition.name] = validateOption(definition, value);
       } else options[definition.name] = true;
     } else if (token.startsWith("-") && token !== "-") {
       const definition = findOption(command, token.slice(1));
       if (!definition) throw new Error(`Unknown option: ${token}`);
-      options[definition.name] = definition.takesValue ? (tokens[++i] ?? (() => { throw new Error(`Option ${token} requires a value`); })()) : true;
+      const value = definition.takesValue ? (tokens[++i] ?? (() => { throw new Error(`Option ${token} requires a value`); })()) : true;
+      options[definition.name] = definition.takesValue ? validateOption(definition, String(value)) : value;
     } else positional.push(token);
   }
   for (let i = 0; i < command.argsDefinition.length; i++) {
@@ -331,6 +343,22 @@ function parseInput(tokens: string[], command: Command, configValues: Record<str
   return { args, options };
 }
 function findOption(command: Command, name: string) { return command.allOptions.find((option) => option.name === name || option.short === name); }
+
+function validateOption(definition: OptionDefinition, raw: string): OptionValue {
+  let value: OptionValue = definition.parser ? definition.parser(raw) : raw;
+  if (!definition.parser && definition.type === "number") {
+    value = Number(raw);
+    if (Number.isNaN(value)) throw new Error(`Option --${definition.name} must be a number`);
+  }
+  if (!definition.parser && definition.type === "boolean") {
+    if (!["true", "false"].includes(raw.toLowerCase())) throw new Error(`Option --${definition.name} must be true or false`);
+    value = raw.toLowerCase() === "true";
+  }
+  if (definition.choices && !definition.choices.includes(String(value))) throw new Error(`Invalid value for --${definition.name}: ${value}. Expected: ${definition.choices.join(", ")}`);
+  const result = definition.validate?.(value);
+  if (result !== undefined && result !== true) throw new Error(typeof result === "string" ? result : `Invalid value for --${definition.name}`);
+  return value;
+}
 
 function loadConfig(config: ConfigOptions | undefined): Record<string, OptionValue> {
   if (!config) return {};

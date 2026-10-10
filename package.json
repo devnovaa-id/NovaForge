@@ -1,7 +1,7 @@
 {
   "name": "novaforge",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Build Powerful CLIs. Ship Better Tools.",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/devnovaa-id/novaforge.git" },

@@ -2,6 +2,14 @@
 
 All notable changes to NovaForge are documented here.
 
+## [0.2.0] - 2026-10-10
+
+### Added
+
+- Typed option validation for numbers and booleans.
+- Choice constraints and custom option validators.
+- Updated package versions to 0.2.0.
+
 ## [0.1.0] - 2026-10-10
 
 ### Added

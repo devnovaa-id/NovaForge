@@ -93,6 +93,19 @@ const result = await runCLI(cli, ["hello", "Key"]);
 console.log(result.exitCode, result.stdout, result.stderr);
 ```
 
+## v0.2 typed options
+
+Options can now validate and convert values:
+
+```ts
+cli.command("check")
+  .option("--port <port>", "Port", {
+    type: "number",
+    validate: (value) => Number(value) > 0,
+  })
+  .option("--mode <mode>", "Mode", { choices: ["fast", "safe"] });
+```
+
 ## Status
 
 Output helpers are available for terminal and automation use:

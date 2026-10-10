@@ -1,6 +1,6 @@
 {
   "name": "@devnovaa-id/novaforge-terminal-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TTY-aware spinner and progress UI for NovaForge CLIs.",
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/devnovaa-id/novaforge.git", "directory": "packages/terminal-ui" },
