@@ -1,12 +1,38 @@
+<div align="center">
+
 # NovaForge
 
-> **Build Powerful CLIs. Ship Better Tools.**
->
-> A modular TypeScript toolkit for building professional Node.js command-line applications.
+### Build Powerful CLIs. Ship Better Tools.
+
+A modular TypeScript toolkit for building professional Node.js command-line applications.
+
+[![CI](https://github.com/devnovaa-id/NovaForge/actions/workflows/ci.yml/badge.svg)](https://github.com/devnovaa-id/NovaForge/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@devnovaa-id/novaforge-core?logo=npm&logoColor=white&label=core)](https://www.npmjs.com/package/@devnovaa-id/novaforge-core)
+[![npm downloads](https://img.shields.io/npm/dm/@devnovaa-id/novaforge-core?logo=npm&logoColor=white)](https://www.npmjs.com/package/@devnovaa-id/novaforge-core)
+[![Node.js](https://img.shields.io/node/v/@devnovaa-id/novaforge-core?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![License](https://img.shields.io/github/license/devnovaa-id/NovaForge)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/devnovaa-id/NovaForge?style=flat&logo=github)](https://github.com/devnovaa-id/NovaForge/stargazers)
+
+[Core](https://www.npmjs.com/package/@devnovaa-id/novaforge-core) · [Testing](https://www.npmjs.com/package/@devnovaa-id/novaforge-testing) · [Prompt](https://www.npmjs.com/package/@devnovaa-id/novaforge-prompt) · [Terminal UI](https://www.npmjs.com/package/@devnovaa-id/novaforge-terminal-ui)
+
+</div>
+
+> **DevNova-ID open-source project** — build, extend, and automate developer tools.
 
 NovaForge is an open-source project by **DevNova-ID**. It provides a reusable foundation for developer tools: command registration, nested commands, typed options, configuration, lifecycle hooks, plugins, machine-readable output, testing utilities, prompts, and terminal UI.
 
 NovaForge is not an application-specific CLI and it is not only an argument parser. It is a small CLI platform that lets every DevNova-ID tool share the same conventions and developer experience.
+
+## At a glance
+
+| | |
+| --- | --- |
+| **Runtime** | Node.js 20+ |
+| **Language** | TypeScript |
+| **Package manager** | npm |
+| **Release** | `0.2.0` |
+| **License** | MIT |
+| **Repository** | [devnovaa-id/NovaForge](https://github.com/devnovaa-id/NovaForge) |
 
 ## Why NovaForge?
 
