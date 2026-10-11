@@ -7,6 +7,7 @@
 A modular TypeScript toolkit for building professional Node.js command-line applications.
 
 [![CI](https://github.com/devnovaa-id/NovaForge/actions/workflows/ci.yml/badge.svg)](https://github.com/devnovaa-id/NovaForge/actions/workflows/ci.yml)
+[![Release](https://github.com/devnovaa-id/NovaForge/actions/workflows/release.yml/badge.svg)](https://github.com/devnovaa-id/NovaForge/actions/workflows/release.yml)
 [![npm version](https://img.shields.io/npm/v/@devnovaa-id/novaforge-core?logo=npm&logoColor=white&label=core)](https://www.npmjs.com/package/@devnovaa-id/novaforge-core)
 [![npm downloads](https://img.shields.io/npm/dm/@devnovaa-id/novaforge-core?logo=npm&logoColor=white)](https://www.npmjs.com/package/@devnovaa-id/novaforge-core)
 [![Node.js](https://img.shields.io/node/v/@devnovaa-id/novaforge-core?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -319,6 +320,19 @@ console.log(result.stderr);   // ""
 ```
 
 `runCLI()` captures stdout, stderr, output lines, and the exit code without spawning a child process.
+
+## Automated releases
+
+Releases are published automatically when a semantic version tag is pushed:
+
+```bash
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+The release workflow verifies the tag against the root version, runs typecheck/tests/package validation, publishes all packages with npm provenance, and creates a GitHub Release with generated notes.
+
+Before the first release, configure an `NPM_TOKEN` repository or `npm` environment secret with permission to publish the `@devnovaa-id` packages. The `npm` environment is used by the workflow for an approval gate. Do not commit npm credentials to the repository.
 
 ## Development
 
