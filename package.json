@@ -8,7 +8,7 @@
   "workspaces": ["packages/*", "examples/*"],
   "scripts": {
     "build": "npm run build --workspace=@devnovaa-id/novaforge-core && npm run build --workspace=@devnovaa-id/novaforge-testing && npm run build --workspace=@devnovaa-id/novaforge-prompt && npm run build --workspace=@devnovaa-id/novaforge-terminal-ui",
-    "test": "node --test --import tsx tests/**/*.test.ts",
+    "test": "node --test --import tsx tests/*.test.ts",
     "typecheck": "npm run typecheck:core && npm run build --workspace=@devnovaa-id/novaforge-core && npm run typecheck:testing && npm run typecheck:prompt && npm run typecheck:terminal-ui",
     "typecheck:core": "tsc -p packages/core/tsconfig.json --noEmit --pretty false",
     "typecheck:testing": "tsc -p packages/testing/tsconfig.json --noEmit --pretty false",
